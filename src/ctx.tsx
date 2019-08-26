@@ -58,11 +58,11 @@ export default <S, A>(): [Function, ContextProvider<ContextProviderProps<S, A>>]
    * @param {Any} props.children The children to render.
    * @returns {React.Component} The Provider component.
    */
-  function CtxProvider({
+   const CtxProvider = ({
     reducer,
     children,
     initialState = {} as S,
-  }: ContextProviderProps<S, A>) {
+  }: ContextProviderProps<S, A>) => {
     return (
       <StateContext.Provider value={useReducer(reducer, initialState)}>
         {children}

@@ -18,6 +18,7 @@
   "include": [
     "./src/*.tx",
     "./src/*.tsx",
-    "./src/ts/**/*"
+    "./src/ts/**/*",
+    "./src/@types/**/*"
   ]
 }
