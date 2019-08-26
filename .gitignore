@@ -65,3 +65,4 @@ dist/ctx.test.*
 dist/ctx.jsx*
 
 diff.txt
+commit-msg.txt
