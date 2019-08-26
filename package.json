@@ -2,7 +2,7 @@
   "name": "react-ctx-store",
   "version": "0.0.1",
   "description": "Custom hook factory for context providers/consumers",
-  "main": "dist/index.js",
+  "main": "dist/ctx.js",
   "scripts": {
     "test": "jest",
     "type-check": "tsc --noEmit",
