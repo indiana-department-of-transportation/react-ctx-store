@@ -6,11 +6,13 @@
  * @author jasmith79@gmail.com
  * @license MIT
  */
+
 import React, {
   createContext,
   useContext,
   useReducer,
-  Component,
+  ReactNode,
+  FunctionComponent
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -22,13 +24,13 @@ type Dispatch<A> = (action: A) => void
 
 // Type for the props passed to the context provider.
 interface ContextProviderProps<S, A> {
-  initialState: S,
+  initialState?: S,
   reducer: Reducer<S, A>,
-  children: Component,
+  children: ReactNode,
 }
 
 // TODO: type these, e.g. ValidationMap<T>, Partial<T>
-interface ContextProvider<T> extends React.FunctionComponent<T> {
+interface ContextProvider<T> extends FunctionComponent<T> {
   propTypes: any,
   defaultProps: any,
 }
@@ -59,7 +61,7 @@ export default <S, A>(): [Function, ContextProvider<ContextProviderProps<S, A>>]
   function CtxProvider({
     reducer,
     children,
-    initialState,
+    initialState = {} as S,
   }: ContextProviderProps<S, A>) {
     return (
       <StateContext.Provider value={useReducer(reducer, initialState)}>

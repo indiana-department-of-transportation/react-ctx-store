@@ -14,5 +14,10 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "jsx": "react"
-  }
+  },
+  "include": [
+    "./src/*.tx",
+    "./src/*.tsx",
+    "./src/ts/**/*"
+  ]
 }
