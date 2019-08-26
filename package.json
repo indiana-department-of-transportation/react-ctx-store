@@ -1,6 +1,6 @@
 {
   "name": "react-ctx-store",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Custom hook factory for context providers/consumers",
   "main": "dist/ctx.js",
   "scripts": {
