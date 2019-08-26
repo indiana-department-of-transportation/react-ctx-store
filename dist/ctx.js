@@ -29,9 +29,9 @@ export default () => {
      * @param {Any} props.children The children to render.
      * @returns {React.Component} The Provider component.
      */
-    function CtxProvider({ reducer, children, initialState = {}, }) {
+    const CtxProvider = ({ reducer, children, initialState = {}, }) => {
         return (React.createElement(StateContext.Provider, { value: useReducer(reducer, initialState) }, children));
-    }
+    };
     CtxProvider.defaultProps = {
         initialState: null,
     };
