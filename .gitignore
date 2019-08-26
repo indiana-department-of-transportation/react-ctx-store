@@ -62,5 +62,6 @@ typings/
 
 # compiled test files
 dist/ctx.test.*
+dist/ctx.jsx*
 
 diff.txt
