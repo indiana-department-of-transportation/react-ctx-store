@@ -1,7 +1,7 @@
 /**
- * ctx.ts
+ * ctx.test.tsx
  *
- * @description Creates a context hook and provider.
+ * @description Tests for the context hook and provider.
  *
  * @author jasmith79@gmail.com
  * @license MIT
@@ -9,7 +9,6 @@
 
 import 'jsdom-global/register';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
