@@ -1,5 +1,5 @@
 /**
- * ctx.ts
+ * ctx.tsx
  *
  * @description Creates a context hook and provider.
  *
