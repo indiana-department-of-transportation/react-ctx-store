@@ -11,7 +11,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel dist/ctx.js -o dist/ctx.umd.js  --source-maps inline",
     "build:ts": "tsc --outDir ./dist",
-    "gen-docs": "typedoc --readme README.md --excludeNotExported --ignoreCompilerErrors --exclude '{**/*spec*,**/node_modules/**,**/spec/**}' --out doc ./src; touch docs/.nojekyll"
+    "gen-docs": "typedoc --readme README.md --excludeNotExported --ignoreCompilerErrors --exclude '{**/*spec*,**/node_modules/**,**/spec/**}' --out docs ./src; touch docs/.nojekyll"
   },
   "keywords": [
     "React",
