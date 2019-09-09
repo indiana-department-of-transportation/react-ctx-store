@@ -1,5 +1,5 @@
 {
-  "name": "react-ctx-store",
+  "name": "@indot/react-ctx-store",
   "version": "0.0.3",
   "description": "Custom hook factory for context providers/consumers",
   "main": "dist/ctx.js",
