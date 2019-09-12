@@ -1,6 +1,6 @@
 {
   "name": "@indot/react-ctx-store",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Custom hook factory for context providers/consumers",
   "main": "dist/ctx.umd.js",
   "types": "dist/ctx.d.ts",
