@@ -23,9 +23,9 @@ type Reducer<S, A> = (prevState: S, action: A) => S
 type Dispatch<A> = (action: A) => void
 
 // Type for the props passed to the context provider.
-interface ContextProviderProps<S, A> {
+interface ContextProviderProps<S extends {}, A> {
   initialState?: S,
-  reducer: Reducer<S, A>,
+  reducer: Reducer<S | {}, A>,
   children: ReactNode,
 }
 
@@ -42,12 +42,14 @@ interface ContextProvider<T> extends FunctionComponent<T> {
  * @typeparam A The generic stand in for the action type of the action fed to dispatch.
  * @returns {Array} A tuple of the use hook and context provider.
  */
-export default <S, A>(): [Function, ContextProvider<ContextProviderProps<S, A>>] => {
+export default <S extends {}, A>(
+  initialData?: S,
+): [Function, ContextProvider<ContextProviderProps<S, A>>] => {
 
   // The initial value is just necessary to appease the compiler, the array will
   // be automatically thrown away and replaced with the one returned by
   // useReducer.
-  const StateContext = createContext([{} as S, (() => {}) as Dispatch<A>]);
+  const StateContext = createContext([{}, (() => {}) as Dispatch<A>]);
 
   /**
    * @description The context provider component.
@@ -61,10 +63,11 @@ export default <S, A>(): [Function, ContextProvider<ContextProviderProps<S, A>>]
    const CtxProvider = ({
     reducer,
     children,
-    initialState = {} as S,
+    initialState,
   }: ContextProviderProps<S, A>) => {
+    const first = initialState || initialData || {};
     return (
-      <StateContext.Provider value={useReducer(reducer, initialState)}>
+      <StateContext.Provider value={useReducer(reducer, first)}>
         {children}
       </StateContext.Provider>
     );

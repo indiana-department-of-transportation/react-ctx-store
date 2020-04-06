@@ -32,11 +32,17 @@ describe('createDataStore', () => {
     expect(true).toBe(true);
   });
 
+  it('should take an optional default state that is passed to the use hook', () => {
+    const foo = { hi: 5 };
+    const [useDataStore, CtxProvider] = createDataStore(foo);
+    expect(true).toBe(true);
+  });
+
   describe('CtxProvider', () => {
     it('should be a valid React Component', () => {
       const [_, CtxProvider] = createDataStore();
       shallow(
-        <CtxProvider reducer={() => { }}>
+        <CtxProvider reducer={() => { return {} }}>
           <span>Hello World!</span>
         </CtxProvider>
       );
@@ -50,7 +56,16 @@ describe('createDataStore', () => {
     it('should optionally take an initial state', () => {
       const [_, CtxProvider] = createDataStore();
       shallow(
-        <CtxProvider reducer={() => { }} initialState={{ foo: 'bar' }}>
+        <CtxProvider reducer={() => { return {} }} initialState={{ foo: 'bar' }}>
+          <span>Hello World!</span>
+        </CtxProvider>
+      );
+    });
+
+    it('should override the initial state passed to createDataStore', () => {
+      const [_, CtxProvider] = createDataStore({ foo: 'baz' });
+      shallow(
+        <CtxProvider reducer={() => { return { foo: 'hi' } }} initialState={{ foo: 'bar' }}>
           <span>Hello World!</span>
         </CtxProvider>
       );
@@ -72,6 +87,50 @@ describe('createDataStore', () => {
 
       const wrapper = mount(
         <CtxProvider reducer={reducer} initialState={{ foo: 'bar' }}>
+          <TestComponent />
+        </CtxProvider>
+      );
+
+      expect(wrapper.find(DisplayResult).props().result.foo).toBe('bar');
+    });
+
+    it('should have the data passed to createDataStore', () => {
+      const [useDataStore, CtxProvider] = createDataStore({ foo: 'baz' });
+
+      const DisplayResult = ({ result }: { result: ReducerState }) => <div>{result.foo}</div>;
+      const TestComponent = () => {
+        const [value] = useDataStore();
+        return (
+          <React.Fragment>
+            <DisplayResult result={value} />
+          </React.Fragment>
+        );
+      };
+
+      const wrapper = mount(
+        <CtxProvider reducer={() => { return { foo: 'hi' } }}>
+          <TestComponent />
+        </CtxProvider>
+      );
+
+      expect(wrapper.find(DisplayResult).props().result.foo).toBe('baz');
+    });
+
+    it('should have the latter of the set initStates', () => {
+      const [useDataStore, CtxProvider] = createDataStore({ foo: 'baz' });
+
+      const DisplayResult = ({ result }: { result: ReducerState }) => <div>{result.foo}</div>;
+      const TestComponent = () => {
+        const [value] = useDataStore();
+        return (
+          <React.Fragment>
+            <DisplayResult result={value} />
+          </React.Fragment>
+        );
+      };
+
+      const wrapper = mount(
+        <CtxProvider reducer={() => { return { foo: 'hi' } }} initialState={{ foo: 'bar' }}>
           <TestComponent />
         </CtxProvider>
       );
