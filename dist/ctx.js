@@ -27,7 +27,7 @@ const prop_types_1 = __importDefault(require("prop-types"));
  * @typeparam A The generic stand in for the action type of the action fed to dispatch.
  * @returns {Array} A tuple of the use hook and context provider.
  */
-exports.default = () => {
+exports.default = (initialData) => {
     // The initial value is just necessary to appease the compiler, the array will
     // be automatically thrown away and replaced with the one returned by
     // useReducer.
@@ -41,8 +41,9 @@ exports.default = () => {
      * @param {Any} props.children The children to render.
      * @returns {React.Component} The Provider component.
      */
-    const CtxProvider = ({ reducer, children, initialState = {}, }) => {
-        return (react_1.default.createElement(StateContext.Provider, { value: react_1.useReducer(reducer, initialState) }, children));
+    const CtxProvider = ({ reducer, children, initialState, }) => {
+        const first = initialState || initialData || {};
+        return (react_1.default.createElement(StateContext.Provider, { value: react_1.useReducer(reducer, first) }, children));
     };
     CtxProvider.defaultProps = {
         initialState: null,
