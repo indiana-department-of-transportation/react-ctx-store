@@ -14,7 +14,9 @@ import React, {
   ReactNode,
   FunctionComponent
 } from 'react';
+
 import PropTypes from 'prop-types';
+import { IPojo } from '@jasmith79/ts-utils';
 
 // Type of the reducer given to useReducer
 type Reducer<S, A> = (prevState: S, action: A) => S
@@ -22,10 +24,16 @@ type Reducer<S, A> = (prevState: S, action: A) => S
 // Same as the type of the dispatch function returned from useReducer.
 type Dispatch<A> = (action: A) => void
 
+type GenericReducerAction = {
+  type: string
+}
+
+type ContextParams<S, A> = [S, Dispatch<A>];
+
 // Type for the props passed to the context provider.
-interface ContextProviderProps<S extends {}, A> {
+export interface ContextProviderProps<S extends {}, A> {
   initialState?: S,
-  reducer: Reducer<S | {}, A>,
+  reducer: Reducer<S, A>,
   children: ReactNode,
 }
 
@@ -42,14 +50,12 @@ interface ContextProvider<T> extends FunctionComponent<T> {
  * @typeparam A The generic stand in for the action type of the action fed to dispatch.
  * @returns {Array} A tuple of the use hook and context provider.
  */
-export default <S extends {}, A>(
-  initialData?: S,
-): [Function, ContextProvider<ContextProviderProps<S, A>>] => {
+export default <S extends IPojo, A = GenericReducerAction>(
+  initialData: S = ({} as S),
+): [() => ContextParams<S, A>, ContextProvider<ContextProviderProps<S, A>>] => {
 
-  // The initial value is just necessary to appease the compiler, the array will
-  // be automatically thrown away and replaced with the one returned by
-  // useReducer.
-  const StateContext = createContext([{}, (() => {}) as Dispatch<A>]);
+  const ctxParams: ContextParams<S, A> = [initialData, (() => { }) as Dispatch<A>];
+  const StateContext = createContext<ContextParams<S, A>>(ctxParams);
 
   /**
    * @description The context provider component.
@@ -60,7 +66,7 @@ export default <S extends {}, A>(
    * @param {Any} props.children The children to render.
    * @returns {React.Component} The Provider component.
    */
-   const CtxProvider = ({
+  const CtxProvider = ({
     reducer,
     children,
     initialState,
@@ -79,7 +85,7 @@ export default <S extends {}, A>(
 
   CtxProvider.propTypes = {
     reducer: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired,
+    children: PropTypes.node.isRequired,
     initialState: PropTypes.object,
   };
 

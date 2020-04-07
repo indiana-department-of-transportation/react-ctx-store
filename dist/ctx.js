@@ -27,11 +27,9 @@ const prop_types_1 = __importDefault(require("prop-types"));
  * @typeparam A The generic stand in for the action type of the action fed to dispatch.
  * @returns {Array} A tuple of the use hook and context provider.
  */
-exports.default = (initialData) => {
-    // The initial value is just necessary to appease the compiler, the array will
-    // be automatically thrown away and replaced with the one returned by
-    // useReducer.
-    const StateContext = react_1.createContext([{}, (() => { })]);
+exports.default = (initialData = {}) => {
+    const ctxParams = [initialData, (() => { })];
+    const StateContext = react_1.createContext(ctxParams);
     /**
      * @description The context provider component.
      *
@@ -50,7 +48,7 @@ exports.default = (initialData) => {
     };
     CtxProvider.propTypes = {
         reducer: prop_types_1.default.func.isRequired,
-        children: prop_types_1.default.element.isRequired,
+        children: prop_types_1.default.node.isRequired,
         initialState: prop_types_1.default.object,
     };
     return [

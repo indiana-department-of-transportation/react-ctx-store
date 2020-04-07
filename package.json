@@ -1,6 +1,6 @@
 {
   "name": "@indot/react-ctx-store",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Custom hook factory for context providers/consumers",
   "main": "dist/ctx.js",
   "types": "dist/ctx.d.ts",
@@ -46,5 +46,8 @@
     "tslint": "^5.18.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@jasmith79/ts-utils": "^0.3.1"
   }
 }

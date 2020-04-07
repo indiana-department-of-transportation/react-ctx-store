@@ -7,17 +7,22 @@
  * @license MIT
  */
 import { ReactNode, FunctionComponent } from 'react';
+import { IPojo } from '@jasmith79/ts-utils';
 declare type Reducer<S, A> = (prevState: S, action: A) => S;
-interface ContextProviderProps<S extends {}, A> {
+declare type Dispatch<A> = (action: A) => void;
+declare type GenericReducerAction = {
+    type: string;
+};
+export interface ContextProviderProps<S extends {}, A> {
     initialState?: S;
-    reducer: Reducer<S | {}, A>;
+    reducer: Reducer<S, A>;
     children: ReactNode;
 }
 interface ContextProvider<T> extends FunctionComponent<T> {
     propTypes: any;
     defaultProps: any;
 }
-declare const _default: <S extends {}, A>(initialData?: S | undefined) => [Function, ContextProvider<ContextProviderProps<S, A>>];
+declare const _default: <S extends IPojo, A = GenericReducerAction>(initialData?: S) => [() => [S, Dispatch<A>], ContextProvider<ContextProviderProps<S, A>>];
 /**
  * @description Utility function to create the hook and provider.
  *
