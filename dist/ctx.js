@@ -52,7 +52,7 @@ exports.default = (initialData = {}) => {
         initialState: prop_types_1.default.object,
     };
     return [
-        () => react_1.useContext(StateContext),
+        react_1.useCallback(() => react_1.useContext(StateContext), [StateContext]),
         CtxProvider,
     ];
 };

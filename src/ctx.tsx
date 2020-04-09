@@ -11,6 +11,7 @@ import React, {
   createContext,
   useContext,
   useReducer,
+  useCallback,
   ReactNode,
   FunctionComponent
 } from 'react';
@@ -90,7 +91,7 @@ export default <S extends IPojo, A = GenericReducerAction>(
   };
 
   return [
-    () => useContext(StateContext),
+    useCallback(() => useContext(StateContext), [StateContext]),
     CtxProvider,
   ];
 };
