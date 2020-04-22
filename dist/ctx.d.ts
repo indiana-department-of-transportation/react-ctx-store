@@ -13,6 +13,7 @@ declare type Dispatch<A> = (action: A) => void;
 declare type GenericReducerAction = {
     type: string;
 };
+declare type ContextParams<S, A> = [S, Dispatch<A>];
 export interface ContextProviderProps<S extends {}, A> {
     initialState?: S;
     reducer: Reducer<S, A>;
@@ -22,7 +23,7 @@ interface ContextProvider<T> extends FunctionComponent<T> {
     propTypes: any;
     defaultProps: any;
 }
-declare const _default: <S extends IPojo, A = GenericReducerAction>(initialData?: S) => [() => [S, Dispatch<A>], ContextProvider<ContextProviderProps<S, A>>];
+declare const _default: <S extends IPojo, A = GenericReducerAction>(initialData?: S) => [() => ContextParams<S, A>, ContextProvider<ContextProviderProps<S, A>>];
 /**
  * @description Utility function to create the hook and provider.
  *
